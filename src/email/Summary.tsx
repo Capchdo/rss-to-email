@@ -1,11 +1,11 @@
 import { CSSProperties } from 'react'
-import parse from 'node-html-parser'
+import { parse } from 'node-html-parser'
 import { Link } from '@react-email/link'
 import { Text } from '@react-email/text'
 
 interface Props {
   content: string
-  href: string
+  href: string | undefined
   paragraphStyle: CSSProperties
   blockquoteStyle: CSSProperties
 }
