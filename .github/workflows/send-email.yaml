@@ -55,4 +55,6 @@ jobs:
           from: HaoBIT
           subject: Bulletin Issues Transferred
 
+          in_reply_to: <bulletin-issues-transferred/Capchdo/rss-to-email@haobit.top>
+
           html_body: file://dist/email.html
