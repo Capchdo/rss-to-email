@@ -1,0 +1,40 @@
+name: Merge upstream
+
+on:
+  schedule:
+    - cron: '32 9 7 * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch
+        run: |
+          git remote add upstream https://github.com/bdevos/rss-to-email
+          git fetch upstream
+      - name: Compare
+        id: git-diff
+        run: |
+          git diff upstream/main --exit-code
+        continue-on-error: true
+      - if: ${{ steps.git-diff.outcome == 'success' }}
+        run: |
+          echo "We are up to date with the upstream." >> "$GITHUB_STEP_SUMMARY"
+      - name: Create a pull request
+        if: ${{ steps.git-diff.outcome == 'failure' }}
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/Capchdo/rss-to-email/pulls \
+            -f title='Merge upstream' \
+            -f body='Relates-to: #1' \
+            -f head='bdevos:main' \
+            -f base='haobit' \
+            -F maintainer_can_modify=false
+        # Fork collaboration lacks permission, therefore we disable `maintainer_can_modify`.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
