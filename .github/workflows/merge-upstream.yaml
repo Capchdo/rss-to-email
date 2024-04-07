@@ -2,28 +2,15 @@ name: Merge upstream
 
 on:
   schedule:
-    - cron: '32 9 7 * *'
+    - cron: '32 9 8 * *'
   workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Fetch
-        run: |
-          git remote add upstream https://github.com/bdevos/rss-to-email
-          git fetch upstream
-      - name: Compare
-        id: git-diff
-        run: |
-          git diff upstream/main --exit-code
-        continue-on-error: true
-      - if: ${{ steps.git-diff.outcome == 'success' }}
-        run: |
-          echo "We are up to date with the upstream." >> "$GITHUB_STEP_SUMMARY"
-      - name: Create a pull request
-        if: ${{ steps.git-diff.outcome == 'failure' }}
+      - name: Create a pull request if updated
+        id: pr
         run: |
           gh api \
             --method POST \
@@ -38,3 +25,18 @@ jobs:
         # Fork collaboration lacks permission, therefore we disable `maintainer_can_modify`.
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+        # We rely on GitHub to compare with the upstream.
+        # If updated, a PR will be created.
+        # If unchanged, the following error will occur.
+        #     message: Validation Failed
+        #     errors:
+        #       - resource: PullRequest
+        #         code: custom
+        #         message: No commits between … and …
+        #     documentation_url: …
+        # GitHub is more intelligent than `git diff`,
+        # and create-or-ignore is much simpler and more robust than detect-and-create.
+      - if: ${{ steps.pr.outcome == 'failure' }}
+        run: |
+          echo "We are up to date with the upstream." >> "$GITHUB_STEP_SUMMARY"
