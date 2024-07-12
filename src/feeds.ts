@@ -1,3 +1,3 @@
 export const feeds = [
-  'https://haobit.top/dev/feed.rss',
+  'https://haobit.top/feed.rss',
 ]
