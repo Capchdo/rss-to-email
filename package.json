@@ -9,7 +9,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@react-email/button": "0.0.17",
+    "@react-email/button": "0.0.18",
     "@react-email/column": "0.0.12",
     "@react-email/container": "0.0.14",
     "@react-email/head": "0.0.11",
@@ -17,26 +17,26 @@
     "@react-email/hr": "0.0.10",
     "@react-email/html": "0.0.10",
     "@react-email/img": "0.0.10",
-    "@react-email/link": "0.0.10",
+    "@react-email/link": "0.0.11",
     "@react-email/preview": "0.0.11",
-    "@react-email/render": "1.0.1",
-    "@react-email/section": "0.0.14",
+    "@react-email/render": "1.0.2",
+    "@react-email/section": "0.0.15",
     "@react-email/text": "0.0.10",
     "dayjs": "1.11.13",
     "node-html-parser": "6.1.13",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router-dom": "6.26.2",
+    "react-router-dom": "7.0.1",
     "rss-parser": "3.13.0"
   },
   "devDependencies": {
-    "@types/react": "18.3.8",
-    "@types/react-dom": "18.3.0",
-    "@vitejs/plugin-react": "4.3.1",
-    "express": "4.21.0",
-    "prettier": "3.3.3",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "express": "4.21.1",
+    "prettier": "3.4.1",
     "rimraf": "6.0.1",
-    "typescript": "5.6.2",
-    "vite": "5.4.6"
+    "typescript": "5.7.2",
+    "vite": "5.4.11"
   }
 }
